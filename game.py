@@ -1,7 +1,6 @@
 from board import Board
 
 class Game:
-
     def __init__(self, x=10, y=10):
         self.board = Board(x, y)
 
@@ -12,4 +11,5 @@ class Game:
             try:
                 line = input("> ")
             except EOFError:
+                print()
                 break
