@@ -9,7 +9,9 @@ class Game:
     def play(self):
         line = ""
         action = ""
-        while True:
+        playing = True
+        while playing:
+            print(self.board.guessNumLeft(), "mines left")
             self.board.print()
 
             while True:
@@ -27,22 +29,27 @@ class Game:
                         x,y = [int(i) for i in args]
                     break
                 except EOFError:
-                    print()
                     sys.exit()
                 except ValueError:
                     if line == "quit":
-                        sys.exit()
-                    print("Invalid input.")
+                        playing = False;
+                    else:
+                        print("Invalid input.")
 
-            if action == "flag":
-                self.board.flag(x,y)
-            elif action == "autopick":
-                self.board.autopick(x,y)
-            else:
-                try:
+            try:
+                if action == "flag":
+                    self.board.flag(x,y)
+                elif action == "autopick":
+                    self.board.autopick(x,y)
+                else:
                     self.board.pick(x,y)
-                except GotMineError:
-                    print("Got a mine!")
-                    self.board.print(showMines=True)
-                    break
+            except GotMineError:
+                print("Got a mine!")
+                self.board.print(showMines=True)
+                break
+            except IndexError:
+                print(x, ", ", y, " is not on the board.", sep='')
 
+            if self.board.minesLeft == 0:
+                playing = False
+                print("You won!")
