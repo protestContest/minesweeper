@@ -7,5 +7,7 @@ class Cell:
     def print(self):
         if self.isMine:
             print("*", end='')
+        elif self.value == 0:
+            print("-", end='')
         else:
             print(self.value, end='')
