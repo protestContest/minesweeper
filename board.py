@@ -1,21 +1,26 @@
 from cell import Cell
+import random
 
 class Board:
+    def __init__(self, x=10, y=10, r=0.1):
+        if x < 0 or y < 0:
+            raise Exception("Invalid board size.")
+        if r < 0 or r > 1:
+            raise Exception("Invalid difficulty rating.")
 
-    def __init__(self, x=10, y=10):
         self.grid = [0] * x
         self.rows = x
         self.cols = y
         for i in range(x):
             self.grid[i] = [0] * y
             for j in range(y):
-                self.grid[i][j] = Cell()
+                self.grid[i][j] = Cell(random.choice([True, False]))
 
-    def print(self):
+    def print(self, showAll=False):
         for i in range(self.rows):
             for j in range(self.cols):
-                if self.grid[i][j].isVisible:
-                    print(self.grid[i][j].value, end='')
+                if self.grid[i][j].isVisible or showAll:
+                    self.grid[i][j].print()
                 else:
                     print("#", end='')
                 print(" ", end='')
