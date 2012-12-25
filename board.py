@@ -12,10 +12,15 @@ class Board:
         self.grid = [0] * x
         self.rows = x
         self.cols = y
+        self.minesLeft = 0
+        self.numMines = 0
+        self.numFlagged = 0
         for i in range(x):
             self.grid[i] = [0] * y
             for j in range(y):
                 if random.random() < r:
+                    self.minesLeft += 1
+                    self.numMines += 1
                     self.grid[i][j] = Cell(True)
                 else:
                     self.grid[i][j] = Cell(False)
@@ -65,6 +70,8 @@ class Board:
                 self.autopick(x, y)
 
     def autopick(self, x, y):
+        if not self.grid[x][y].isVisible:
+            return
         for di in range(x-1, x+2):
             for dj in range(y-1, y+2):
                 if di < 0 or di >= self.rows \
@@ -75,5 +82,16 @@ class Board:
 
     def flag(self, x, y):
         if not self.grid[x][y].isVisible:
-            self.grid[x][y].isFlagged = not self.grid[x][y].isFlagged
+            if self.grid[x][y].isFlagged:
+                if self.grid[x][y].isMine:
+                    self.minesLeft += 1
+                self.numFlagged -= 1
+                self.grid[x][y].isFlagged = False
+            else:
+                if self.grid[x][y].isMine:
+                    self.minesLeft -= 1
+                self.numFlagged += 1
+                self.grid[x][y].isFlagged = True
 
+    def guessNumLeft(self):
+        return self.numMines - self.numFlagged
