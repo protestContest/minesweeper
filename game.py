@@ -14,6 +14,7 @@ class Game:
 
             while True:
                 try:
+                    action = ""
                     line = input("> ")
                     if line.split(" ")[0] == "f":
                         x,y = [int(i) for i in line.split(" ")[1:]]
