@@ -9,7 +9,7 @@ class Game:
     def play(self):
         line = ""
         while line != "quit":
-            self.board.print(showAll=True)
+            self.board.print()
 
             while True:
                 try:
@@ -27,5 +27,5 @@ class Game:
                 self.board.pick(x,y)
             except GotMineError:
                 print("Got a mine!")
-                self.board.print(showAll=True)
+                self.board.print(showMines=True)
                 break
