@@ -53,7 +53,9 @@ class Board:
             print()
 
     def pick(self, x, y):
-        if self.grid[x][y].isMine:
+        if self.grid[x][y].isFlagged:
+            return
+        elif self.grid[x][y].isMine:
             raise GotMineError()
         elif self.grid[x][y].isVisible:
             return
@@ -69,4 +71,6 @@ class Board:
                         self.pick(di, dj)
 
     def flag(self, x, y):
-        self.grid[x][y].isFlagged = True
+        if not self.grid[x][y].isVisible:
+            self.grid[x][y].isFlagged = not self.grid[x][y].isFlagged
+
