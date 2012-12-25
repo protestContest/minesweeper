@@ -1,0 +1,2 @@
+class GotMineError(Exception):
+    pass
