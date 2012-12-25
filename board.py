@@ -31,7 +31,7 @@ class Board:
                             curVal += 1
                 self.grid[i][j].value = curVal
 
-    def print(self, showAll=False):
+    def print(self, showMines=False, showAll=False):
         numColWidth = len(str(self.rows))
         print(" " * numColWidth, end='')
         for i in range(0, self.cols, 5):
@@ -44,7 +44,8 @@ class Board:
             else:
                 print(" " * numColWidth, end='')
             for j in range(self.cols):
-                if self.grid[i][j].isVisible or showAll:
+                if self.grid[i][j].isVisible or showAll \
+                        or (showMines and self.grid[i][j].isMine):
                     self.grid[i][j].print()
                 else:
                     print("#", end='')
@@ -52,5 +53,17 @@ class Board:
             print()
 
     def pick(self, x, y):
-        if self.grid[y][x].isMine:
+        if self.grid[x][y].isMine:
             raise GotMineError()
+        elif self.grid[x][y].isVisible:
+            return
+        else:
+            self.grid[x][y].isVisible = True
+            if self.grid[x][y].value == 0:
+                for di in range(x-1, x+2):
+                    for dj in range(y-1, y+2):
+                        if di < 0 or di >= self.rows \
+                                or dj < 0 or dj >= self.cols \
+                                or (di == x and dj == y):
+                            continue
+                        self.pick(di, dj)
