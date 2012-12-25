@@ -15,6 +15,6 @@ class Cell:
                 print(self.value, end='')
         else:
             if self.isFlagged:
-                print("+", end='')
+                print("\u00A4", end='')
             else:
-                print("#", end='')
+                print("+", end='')
