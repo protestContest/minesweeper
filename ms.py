@@ -11,7 +11,10 @@ space, like this:
 
 > 4 7
 
-Currently there is no mechanism to flag a mine.
+To flag or unflag a tile, enter "f" followed by the row an column:
+
+> f 8 2
+
 To quit, type "quit"
 ''')
     g = Game()
