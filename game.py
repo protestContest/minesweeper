@@ -8,24 +8,34 @@ class Game:
 
     def play(self):
         line = ""
-        while line != "quit":
+        action = ""
+        while True:
             self.board.print()
 
             while True:
                 try:
                     line = input("> ")
-                    x,y = [int(i) for i in line.split(" ")]
+                    if line.split(" ")[0] == "f":
+                        x,y = [int(i) for i in line.split(" ")[1:]]
+                        action = "flag"
+                    else:
+                        x,y = [int(i) for i in line.split(" ")]
                     break
                 except EOFError:
                     print()
                     sys.exit()
                 except ValueError:
+                    if line == "quit":
+                        sys.exit()
                     print("Invalid input.")
 
+            if action == "flag":
+                self.board.flag(x,y)
+            else:
+                try:
+                    self.board.pick(x,y)
+                except GotMineError:
+                    print("Got a mine!")
+                    self.board.print(showMines=True)
+                    break
 
-            try:
-                self.board.pick(x,y)
-            except GotMineError:
-                print("Got a mine!")
-                self.board.print(showMines=True)
-                break
