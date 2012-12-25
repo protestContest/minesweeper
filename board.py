@@ -32,7 +32,17 @@ class Board:
                 self.grid[i][j].value = curVal
 
     def print(self, showAll=False):
+        numColWidth = len(str(self.rows))
+        print(" " * numColWidth, end='')
+        for i in range(0, self.cols, 5):
+            print(i, " "*(2*5 - len(str(i))), end='', sep='')
+        print()
+
         for i in range(self.rows):
+            if i%5 == 0:
+                print(i, " "*(numColWidth - len(str(i))), end='', sep='')
+            else:
+                print(" " * numColWidth, end='')
             for j in range(self.cols):
                 if self.grid[i][j].isVisible or showAll:
                     self.grid[i][j].print()
