@@ -62,13 +62,16 @@ class Board:
         else:
             self.grid[x][y].isVisible = True
             if self.grid[x][y].value == 0:
-                for di in range(x-1, x+2):
-                    for dj in range(y-1, y+2):
-                        if di < 0 or di >= self.rows \
-                                or dj < 0 or dj >= self.cols \
-                                or (di == x and dj == y):
-                            continue
-                        self.pick(di, dj)
+                self.autopick(x, y)
+
+    def autopick(self, x, y):
+        for di in range(x-1, x+2):
+            for dj in range(y-1, y+2):
+                if di < 0 or di >= self.rows \
+                        or dj < 0 or dj >= self.cols \
+                        or (di == x and dj == y):
+                    continue
+                self.pick(di, dj)
 
     def flag(self, x, y):
         if not self.grid[x][y].isVisible:

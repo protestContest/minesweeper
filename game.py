@@ -16,11 +16,15 @@ class Game:
                 try:
                     action = ""
                     line = input("> ")
-                    if line.split(" ")[0] == "f":
-                        x,y = [int(i) for i in line.split(" ")[1:]]
+                    args = line.split(" ")
+                    if args[0] == "f":
+                        x,y = [int(i) for i in args[1:]]
                         action = "flag"
+                    elif args[0] == "a":
+                        x,y = [int(i) for i in args[1:]]
+                        action = "autopick"
                     else:
-                        x,y = [int(i) for i in line.split(" ")]
+                        x,y = [int(i) for i in args]
                     break
                 except EOFError:
                     print()
@@ -32,6 +36,8 @@ class Game:
 
             if action == "flag":
                 self.board.flag(x,y)
+            elif action == "autopick":
+                self.board.autopick(x,y)
             else:
                 try:
                     self.board.pick(x,y)
