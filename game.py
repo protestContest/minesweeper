@@ -5,8 +5,11 @@ class Game:
     def __init__(self, x=10, y=10):
         self.board = Board(x, y)
 
-    def start(self):
-        line = input()
-        while input != "quit\n":
-            line = input()
+    def play(self):
+        line = ""
+        while line != "quit":
             self.board.print()
+            try:
+                line = input("> ")
+            except EOFError:
+                break
