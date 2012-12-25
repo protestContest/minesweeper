@@ -46,9 +46,9 @@ class Board:
             for j in range(self.cols):
                 if self.grid[i][j].isVisible or showAll \
                         or (showMines and self.grid[i][j].isMine):
-                    self.grid[i][j].print()
+                    self.grid[i][j].print(revealed=True)
                 else:
-                    print("#", end='')
+                    self.grid[i][j].print()
                 print(" ", end='')
             print()
 
@@ -67,3 +67,6 @@ class Board:
                                 or (di == x and dj == y):
                             continue
                         self.pick(di, dj)
+
+    def flag(self, x, y):
+        self.grid[x][y].isFlagged = True
