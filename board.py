@@ -15,14 +15,17 @@ class Board:
         for i in range(x):
             self.grid[i] = [0] * y
             for j in range(y):
-                self.grid[i][j] = Cell(random.choice([True, False]))
+                if random.random() < r:
+                    self.grid[i][j] = Cell(True)
+                else:
+                    self.grid[i][j] = Cell(False)
         
         for i in range(x):
             for j in range(y):
                 curVal = 0
-                for di in range(i-1, i+1):
-                    for dj in range(j-1, j+1):
-                        if di < 0 or di >= x or dj < 0 or dj > y:
+                for di in range(i-1, i+2):
+                    for dj in range(j-1, j+2):
+                        if di < 0 or di >= x or dj < 0 or dj >= y:
                             continue
                         if self.grid[di][dj].isMine:
                             curVal += 1
@@ -39,5 +42,5 @@ class Board:
             print()
 
     def pick(self, x, y):
-        if self.grid[x][y].isMine:
+        if self.grid[y][x].isMine:
             raise GotMineError()
