@@ -15,8 +15,10 @@ class Game:
                 print()
                 break
 
+            x,y = [int(i) for i in line.split(" ")]
+
             try:
-                self.board.pick(1,1)
+                self.board.pick(x,y)
             except GotMineError:
                 print("Got a mine!")
                 self.board.print(showAll=True)
