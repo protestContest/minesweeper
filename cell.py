@@ -2,12 +2,19 @@ class Cell:
     def __init__(self, isMine = False):
         self.isMine = isMine
         self.isVisible = False
+        self.isFlagged = False
         self.value = 0
 
-    def print(self):
-        if self.isMine:
-            print("*", end='')
-        elif self.value == 0:
-            print("-", end='')
+    def print(self, revealed=False):
+        if revealed:
+            if self.isMine:
+                print("*", end='')
+            elif self.value == 0:
+                print("-", end='')
+            else:
+                print(self.value, end='')
         else:
-            print(self.value, end='')
+            if self.isFlagged:
+                print("+", end='')
+            else:
+                print("#", end='')
