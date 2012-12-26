@@ -16,6 +16,16 @@ To flag or unflag a tile, enter "f" followed by the row an column:
 > f 8 2
 
 To quit, type "quit"
+
+What type of game would you like to play?
+a) Easy
+b) Medium
+c) Hard
 ''')
+    while True:
+        response = input("? ")
+        if response in ["a", "b", "c"]:
+            break
+
     g = Game()
     g.play()
