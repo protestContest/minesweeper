@@ -3,7 +3,7 @@ from msexceptions import GotMineError
 import sys
 
 class Game:
-    def __init__(self, x=10, y=10):
+    def __init__(self, x=10, y=10, r=0.1):
         self.board = Board(x, y)
 
     def play(self):
@@ -32,7 +32,7 @@ class Game:
                     sys.exit()
                 except ValueError:
                     if line == "quit":
-                        playing = False;
+                        sys.exit()
                     else:
                         print("Invalid input.")
 
