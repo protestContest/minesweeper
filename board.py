@@ -65,26 +65,31 @@ class Board:
 
     def pick(self, x, y):
         if self.grid[x][y].isFlagged:
-            return
+            return []
         elif self.grid[x][y].isMine:
             raise GotMineError()
         elif self.grid[x][y].isVisible:
-            return
+            return []
         else:
             self.grid[x][y].isVisible = True
+            collector = [(x, y, self.grid[x][y].value)]
             if self.grid[x][y].value == 0:
-                self.autopick(x, y)
+                collector += self.autopick(x, y)
+            return collector
 
     def autopick(self, x, y):
         if not self.grid[x][y].isVisible:
-            return
+            return []
+
+        collector = []
         for di in range(x-1, x+2):
             for dj in range(y-1, y+2):
                 if di < 0 or di >= self.rows \
                         or dj < 0 or dj >= self.cols \
                         or (di == x and dj == y):
                     continue
-                self.pick(di, dj)
+                collector += self.pick(di, dj)
+        return collector
 
     def flag(self, x, y):
         if not self.grid[x][y].isVisible:
