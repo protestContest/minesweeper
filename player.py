@@ -11,10 +11,13 @@ class Player:
     def getMove(self):
         return "0 0"
 
-    def sendState(self, tiles):
+    def sendState(self, tiles, type="reveal"):
         for t in tiles:
-            self.gamestate.grid[t[0]][t[1]].value = t[2]
-            self.gamestate.grid[t[0]][t[1]].isVisible = True
+            if type == "flag":
+                self.gamestate.flag(t[0], t[1])
+            else:
+                self.gamestate.grid[t[0]][t[1]].value = t[2]
+                self.gamestate.grid[t[0]][t[1]].isVisible = True
 
     def printState(self):
        print(self.gamestate.guessNumLeft(), "mines left")
