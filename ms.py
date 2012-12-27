@@ -30,11 +30,11 @@ c) Hard
 
     g = None
     if response == "a":
-        g = Game(9, 9)
+        g = Game(9, 9, 10)
     elif response == "b":
-        g = Game(16, 16)
+        g = Game(16, 16, 40)
     elif response == "c":
-        g = Game(16, 30)
+        g = Game(16, 30, 99)
     else:
         sys.exit()
 

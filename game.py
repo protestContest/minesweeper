@@ -3,8 +3,8 @@ from msexceptions import GotMineError
 import sys
 
 class Game:
-    def __init__(self, x=10, y=10, r=0.1):
-        self.board = Board(x, y)
+    def __init__(self, x=10, y=10, mines=10):
+        self.board = Board(x, y, mines)
 
     def play(self):
         line = ""
