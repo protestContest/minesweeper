@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from game import Game
+import sys
 
 if __name__ == "__main__":
     print('''Minesweeper!
@@ -27,5 +28,14 @@ c) Hard
         if response in ["a", "b", "c"]:
             break
 
-    g = Game()
+    g = None
+    if response == "a":
+        g = Game(9, 9)
+    elif response == "b":
+        g = Game(16, 16)
+    elif response == "c":
+        g = Game(16, 30)
+    else:
+        sys.exit()
+
     g.play()
