@@ -1,12 +1,18 @@
-from board import Board
+from board import Board 
 from msexceptions import GotMineError
+from player import Player
 import sys
 
 class Game:
     def __init__(self, x=10, y=10, mines=10):
         self.board = Board(x, y, mines)
+        self.players = []
 
     def play(self):
+        if self.players == []:
+            print("No players")
+            return
+
         line = ""
         action = ""
         playing = True
@@ -17,7 +23,7 @@ class Game:
             while True:
                 try:
                     action = ""
-                    line = input("> ")
+                    line = self.players[0].getMove()
                     args = line.split(" ")
                     if args[0] == "f":
                         x,y = [int(i) for i in args[1:]]
@@ -53,3 +59,7 @@ class Game:
             if self.board.minesLeft == 0:
                 playing = False
                 print("You won!")
+
+    def addPlayer(self, player):
+        player.setBoard(self.board.rows, self.board.cols)
+        self.players.append(player)

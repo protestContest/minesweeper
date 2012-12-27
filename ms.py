@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from game import Game
+from consoleplayer import ConsolePlayer
 import sys
 
 if __name__ == "__main__":
@@ -38,4 +39,5 @@ c) Hard
     else:
         sys.exit()
 
+    g.addPlayer(ConsolePlayer())
     g.play()
