@@ -3,27 +3,33 @@ import random
 from msexceptions import GotMineError
 
 class Board:
-    def __init__(self, x=10, y=10, r=0.1):
+    def __init__(self, x=10, y=10, mines=10):
         if x < 0 or y < 0:
             raise Exception("Invalid board size.")
-        if r < 0 or r > 1:
-            raise Exception("Invalid difficulty rating.")
 
         self.grid = [0] * x
         self.rows = x
         self.cols = y
-        self.minesLeft = 0
-        self.numMines = 0
+        self.minesLeft = mines
+        self.numMines = mines
         self.numFlagged = 0
+
         for i in range(x):
             self.grid[i] = [0] * y
             for j in range(y):
-                if random.random() < r:
-                    self.minesLeft += 1
-                    self.numMines += 1
-                    self.grid[i][j] = Cell(True)
-                else:
-                    self.grid[i][j] = Cell(False)
+                self.grid[i][j] = Cell(False)
+
+        for i in range(mines):
+            mineX = random.randint(0, x-1)
+            mineY = random.randint(0, y-1)
+            while self.grid[mineX][mineY].isMine:
+                mineX = mineX + 1
+                if mineX == x:
+                    mineX = 0
+                    mineY = mineY + 1
+                    if mineY == y:
+                        mineY = 0
+            self.grid[mineX][mineY].isMine = True 
         
         for i in range(x):
             for j in range(y):
@@ -37,7 +43,7 @@ class Board:
                 self.grid[i][j].value = curVal
 
     def print(self, showMines=False, showAll=False):
-        numColWidth = len(str(self.rows))
+        numColWidth = len(str(self.rows)) + 1
         print(" " * numColWidth, end='')
         for i in range(0, self.cols, 3):
             print(i, " "*(2*3 - len(str(i))), end='', sep='')
@@ -47,7 +53,7 @@ class Board:
             if i%3 == 0:
                 print(i, " "*(numColWidth - len(str(i))), end='', sep='')
             else:
-                print(" " * numColWidth, end='')
+                print(" "*numColWidth, end='')
             for j in range(self.cols):
                 if self.grid[i][j].isVisible or showAll \
                         or (showMines and self.grid[i][j].isMine):
