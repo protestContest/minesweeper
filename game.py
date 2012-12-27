@@ -17,51 +17,53 @@ class Game:
         action = ""
         playing = True
         while playing:
-            #print(self.board.guessNumLeft(), "mines left")
-            #self.board.print()
+            for player in self.players:
+                player.printState()
 
-            self.players[0].printState()
-
-            while True:
-                try:
-                    action = ""
-                    line = self.players[0].getMove()
-                    args = line.split(" ")
-                    if args[0] == "f":
-                        x,y = [int(i) for i in args[1:]]
-                        action = "flag"
-                    elif args[0] == "a":
-                        x,y = [int(i) for i in args[1:]]
-                        action = "autopick"
-                    else:
-                        x,y = [int(i) for i in args]
-                    break
-                except EOFError:
-                    sys.exit()
-                except ValueError:
-                    if line == "quit":
+                while True:
+                    try:
+                        action = ""
+                        line = player.getMove()
+                        args = line.split(" ")
+                        if args[0] == "f":
+                            x,y = [int(i) for i in args[1:]]
+                            action = "flag"
+                        elif args[0] == "a":
+                            x,y = [int(i) for i in args[1:]]
+                            action = "autopick"
+                        else:
+                            x,y = [int(i) for i in args]
+                        break
+                    except EOFError:
                         sys.exit()
+                    except ValueError:
+                        if line == "quit":
+                            sys.exit()
+                        else:
+                            print("Invalid input.")
+
+                try:
+                    if action == "flag":
+                        self.board.flag(x,y)
+                        player.sendState([(x, y)], "flag")
+                    elif action == "autopick":
+                        tiles = self.board.autopick(x,y)
+                        player.sendState(tiles)
                     else:
-                        print("Invalid input.")
+                        tiles = self.board.pick(x,y)
+                        player.sendState(tiles)
+                except GotMineError:
+                    print("Got a mine!")
+                    self.board.print(showMines=True)
+                    playing = False
+                    break
+                except IndexError:
+                    print(x, ", ", y, " is not on the board.", sep='')
 
-            try:
-                if action == "flag":
-                    self.board.flag(x,y)
-                elif action == "autopick":
-                    self.board.autopick(x,y)
-                else:
-                    tiles = self.board.pick(x,y)
-                    self.players[0].sendState(tiles)
-            except GotMineError:
-                print("Got a mine!")
-                self.board.print(showMines=True)
-                break
-            except IndexError:
-                print(x, ", ", y, " is not on the board.", sep='')
-
-            if self.board.minesLeft == 0:
-                playing = False
-                print("You won!")
+                if self.board.minesLeft == 0:
+                    playing = False
+                    print("You won!")
+                    self.board.print()
 
     def addPlayer(self, player):
         player.setBoard(self.board.rows, self.board.cols, self.board.numMines)
