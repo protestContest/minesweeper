@@ -17,8 +17,10 @@ class Game:
         action = ""
         playing = True
         while playing:
-            print(self.board.guessNumLeft(), "mines left")
-            self.board.print()
+            #print(self.board.guessNumLeft(), "mines left")
+            #self.board.print()
+
+            self.players[0].printState()
 
             while True:
                 try:
@@ -48,7 +50,8 @@ class Game:
                 elif action == "autopick":
                     self.board.autopick(x,y)
                 else:
-                    self.board.pick(x,y)
+                    tiles = self.board.pick(x,y)
+                    self.players[0].sendState(tiles)
             except GotMineError:
                 print("Got a mine!")
                 self.board.print(showMines=True)
@@ -61,5 +64,5 @@ class Game:
                 print("You won!")
 
     def addPlayer(self, player):
-        player.setBoard(self.board.rows, self.board.cols)
+        player.setBoard(self.board.rows, self.board.cols, self.board.numMines)
         self.players.append(player)
