@@ -20,30 +20,19 @@ class Game:
             for player in self.players:
                 player.printState()
 
-                while True:
-                    try:
-                        action = ""
-                        line = player.getMove()
-                        args = line.split(" ")
-                        if args[0] == "f":
-                            x,y = [int(i) for i in args[1:]]
-                            action = "flag"
-                        elif args[0] == "a":
-                            x,y = [int(i) for i in args[1:]]
-                            action = "autopick"
-                        else:
-                            x,y = [int(i) for i in args]
-                        break
-                    except EOFError:
-                        sys.exit()
-                    except ValueError:
-                        if line == "quit":
-                            sys.exit()
-                        else:
-                            print("Invalid input.")
+                move = player.getMove()
+                action = move[0]
+                if action == "quit":
+                    sys.exit()
+                else:
+                    x, y = move[1:3]
 
                 try:
-                    if action == "flag":
+                    if x < 0 or y < 0:
+                        raise IndexError
+                    if action == "quit":
+                        sys.exit()
+                    elif action == "flag":
                         self.board.flag(x,y)
                         player.sendState([(x, y)], "flag")
                     elif action == "autopick":
@@ -58,7 +47,7 @@ class Game:
                     playing = False
                     break
                 except IndexError:
-                    print(x, ", ", y, " is not on the board.", sep='')
+                    print("That is not on the board.", sep='')
 
                 if self.board.minesLeft == 0:
                     playing = False

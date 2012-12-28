@@ -9,7 +9,7 @@ class Player:
         self.gamestate.numMines = mines
 
     def getMove(self):
-        return "0 0"
+        return ["pick", 0, 0]
 
     def sendState(self, tiles, type="reveal"):
         for t in tiles:
