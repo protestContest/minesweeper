@@ -45,13 +45,13 @@ class Board:
     def print(self, showMines=False, showAll=False):
         numColWidth = len(str(self.rows)) + 1
         print(" " * numColWidth, end='')
-        for i in range(0, self.cols, 3):
+        for i in range(1, self.cols, 3):
             print(i, " "*(2*3 - len(str(i))), end='', sep='')
         print()
 
         for i in range(self.rows):
             if i%3 == 0:
-                print(i, " "*(numColWidth - len(str(i))), end='', sep='')
+                print(i+1, " "*(numColWidth - len(str(i))), end='', sep='')
             else:
                 print(" "*numColWidth, end='')
             for j in range(self.cols):
