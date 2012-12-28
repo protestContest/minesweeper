@@ -8,7 +8,7 @@ class Cell:
     def print(self, revealed=False):
         if revealed:
             if self.isMine:
-                print("*", end='')
+                print("X", end='')
             elif self.value == 0:
                 print("-", end='')
             else:
