@@ -3,6 +3,7 @@
 from game import Game
 from consoleplayer import ConsolePlayer
 import sys
+import os
 
 if __name__ == "__main__":
     print('''Minesweeper!
@@ -39,5 +40,6 @@ c) Hard
     else:
         sys.exit()
 
-    g.addPlayer(ConsolePlayer())
+    name = os.environ["USER"]
+    g.addPlayer(ConsolePlayer(name))
     g.play()
