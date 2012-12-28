@@ -51,7 +51,7 @@ class Board:
 
         for i in range(self.rows):
             if i%3 == 0:
-                print(i+1, " "*(numColWidth - len(str(i))), end='', sep='')
+                print(i+1, " "*(numColWidth - len(str(i+1))), end='', sep='')
             else:
                 print(" "*numColWidth, end='')
             for j in range(self.cols):
