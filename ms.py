@@ -2,6 +2,7 @@
 
 from game import Game
 from consoleplayer import ConsolePlayer
+from networkplayer import NetworkPlayer
 import sys
 import os
 
@@ -46,5 +47,5 @@ c) Hard
         sys.exit()
 
     name = os.environ["USER"]
-    g.addPlayer(ConsolePlayer(name))
+    g.addPlayer(NetworkPlayer(name))
     g.play()
