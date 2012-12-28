@@ -26,9 +26,14 @@ b) Medium
 c) Hard
 ''')
     while True:
-        response = input("? ")
-        if response in ["a", "b", "c"]:
-            break
+        try:
+            response = input("? ")
+            if response in ["a", "b", "c", "quit"]:
+                break
+        except EOFError:
+            sys.exit()
+    if response == "quit":
+        sys.exit()
 
     g = None
     if response == "a":
