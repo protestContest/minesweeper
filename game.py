@@ -30,7 +30,7 @@ class Game:
                 try:
                     if x < 0 or y < 0:
                         raise IndexError
-                    if action == "quit":
+                    elif action == "quit":
                         sys.exit()
                     elif action == "flag":
                         self.board.flag(x,y)
