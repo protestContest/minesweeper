@@ -47,5 +47,5 @@ c) Hard
         sys.exit()
 
     name = os.environ["USER"]
-    g.addPlayer(NetworkPlayer(name))
+    g.addPlayer(ConsolePlayer(name))
     g.play()
